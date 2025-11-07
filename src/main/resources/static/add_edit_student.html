@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Student</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+<div class="dashboard-container slide-up" style="max-width: 900px;">
+    <form id="student-form" class="content-card data-form">
+        <h2 id="form-title">Add New Student</h2>
+        <input type="hidden" id="studentId">
+
+        <div class="form-section">
+            <h3>Core Information</h3>
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email (Login ID)</label>
+                    <input type="email" id="email" required>
+                </div>
+            </div>
+            <div class="form-group" id="password-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Leave blank to keep unchanged on edit">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Identifiers</h3>
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="rollNumber">Roll Number</label>
+                    <input type="text" id="rollNumber">
+                </div>
+                <div class="form-group">
+                    <label for="registerNumber">Registration Number</label>
+                    <input type="text" id="registerNumber">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Academic Details</h3>
+            <div class="form-grid-3">
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" value="IT">
+                </div>
+                <div class="form-group">
+                    <label for="degree">Degree (e.g., B.Tech)</label>
+                    <input type="text" id="degree" value="B.Tech">
+                </div>
+                <div class="form-group">
+                    <label for="semester">Current Semester</label>
+                    <input type="text" id="semester" value="5">
+                </div>
+                <div class="form-group">
+                    <label for="admissionYear">Admission Year</label>
+                    <input type="text" id="admissionYear">
+                </div>
+                <div class="form-group">
+                    <label for="admissionNo">Admission No.</label>
+                    <input type="text" id="admissionNo">
+                </div>
+                <div class="form-group">
+                    <label for="studentStatus">Student Status</label>
+                    <select id="studentStatus">
+                        <option value="Active">Active</option>
+                        <option value="Graduated">Graduated</option>
+                        <option value="On-Hold">On-Hold</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Personal & Contact</h3>
+            <div class="form-grid-3">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Contact Number</label>
+                    <input type="tel" id="phone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" rows="3"></textarea>
+            </div>
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="guardianContact">Guardian/Parent Contact</label>
+                    <input type="tel" id="guardianContact">
+                </div>
+                <div class="form-group">
+                    <label for="hostelStatus">Hostel/Day Scholar</label>
+                    <select id="hostelStatus">
+                        <option value="Day Scholar">Day Scholar</option>
+                        <option value="Hostel">Hostel</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Financial</h3>
+            <div class="form-group">
+                <label for="feeDetails">Fee Details</label>
+                <select id="feeDetails">
+                    <option value="Pending">Pending</option>
+                    <option value="Paid">Paid</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Semester Results & Attendance</h3>
+            <div class="form-group">
+                <label for="attendanceRecord">Attendance Record (e.g., 95%)</label>
+                <input type="text" id="attendanceRecord">
+            </div>
+
+            <div class="form-group">
+                <label for="cgpa">Calculated CGPA (Auto-calculated on save)</label>
+                <input type="number" id="cgpa" disabled style="color: #00d9ff; font-weight: bold;">
+            </div>
+
+            <p>Enter marks (out of 100) for the 7 subjects:</p>
+            <div class="form-grid-4">
+                <div class="form-group"><label for="dlmMarks">DLM</label><input type="number" id="dlmMarks" value="0" min="0" max="100"></div>
+                <div class="form-group"><label for="caoMarks">CAO</label><input type="number" id="caoMarks" value="0" min="0" max="100"></div>
+                <div class="form-group"><label for="evsMarks">EVS</label><input type="number" id="evsMarks" value="0" min="0" max="100"></div>
+                <div class="form-group"><label for="dbmsMarks">DBMS</label><input type="number" id="dbmsMarks" value="0" min="0" max="100"></div>
+                <div class="form-group"><label for="psMarks">P&S</label><input type="number" id="psMarks" value="0" min="0" max="100"></div>
+                <div class="form-group"><label for="uhvMarks">UHV</label><input type="number" id="uhvMarks" value="0" min="0" max="100"></div>
+                <div class="form-group"><label for="oopsMarks">OOPS</label><input type="number" id="oopsMarks" value="0" min="0" max="100"></div>
+            </div>
+        </div>
+
+        <div id="form-message" class="error-message" style="display:none;"></div>
+        <div class="action-buttons">
+            <button type="submit" class="glow-btn" id="submit-btn">Save Student</button>
+            <a href="/teacher_dashboard.html" class="glow-btn" style="background-color: #6c757d;">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Use the port 9727 from your application.properties
+    const API_URL = 'http://localhost:9727/api';
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const studentId = params.get('id');
+        const form = document.getElementById('student-form');
+        const title = document.getElementById('form-title');
+        const submitBtn = document.getElementById('submit-btn');
+        const passwordGroup = document.getElementById('password-group');
+        const studentIdField = document.getElementById('studentId');
+        const emailField = document.getElementById('email');
+
+        if (studentId) {
+            // --- EDIT MODE ---
+            title.textContent = 'Edit Student Record';
+            submitBtn.textContent = 'Update Student';
+            passwordGroup.style.display = 'block'; // Show password, but placeholder
+            studentIdField.value = studentId;
+
+            // Fetch existing student data
+            fetchAndPopulateForm(studentId);
+        } else {
+            // --- ADD MODE ---
+            title.textContent = 'Add New Student';
+            submitBtn.textContent = 'Save Student';
+            passwordGroup.style.display = 'block'; // Show password field
+        }
+
+        form.addEventListener('submit', handleFormSubmit);
+    });
+
+    async function fetchAndPopulateForm(id) {
+        try {
+            const response = await fetch(`${API_URL}/teacher/student/${id}`);
+            if (!response.ok) throw new Error('Student not found');
+
+            const student = await response.json();
+
+            // Populate Student Fields
+            document.getElementById('name').value = student.name || '';
+            document.getElementById('email').value = student.email || '';
+            document.getElementById('rollNumber').value = student.rollNumber || '';
+            document.getElementById('registerNumber').value = student.registerNumber || '';
+            document.getElementById('department').value = student.department || '';
+            document.getElementById('degree').value = student.degree || '';
+            document.getElementById('semester').value = student.semester || '';
+            document.getElementById('admissionYear').value = student.admissionYear || '';
+            document.getElementById('admissionNo').value = student.admissionNo || '';
+            document.getElementById('studentStatus').value = student.studentStatus || 'Active';
+            document.getElementById('dob').value = student.dob || '';
+            document.getElementById('gender').value = student.gender || 'Male';
+            document.getElementById('phone').value = student.phone || '';
+            document.getElementById('address').value = student.address || '';
+            document.getElementById('guardianContact').value = student.guardianContact || '';
+            document.getElementById('hostelStatus').value = student.hostelStatus || 'Day Scholar';
+            document.getElementById('feeDetails').value = student.feeDetails || 'Pending';
+
+            // Populate Results Fields (if they exist)
+            if (student.result) {
+                document.getElementById('attendanceRecord').value = student.result.attendanceRecord || '';
+                document.getElementById('cgpa').value = student.result.cgpa || 0.0;
+                document.getElementById('dlmMarks').value = student.result.dlmMarks || 0;
+                document.getElementById('caoMarks').value = student.result.caoMarks || 0;
+                document.getElementById('evsMarks').value = student.result.evsMarks || 0;
+                document.getElementById('dbmsMarks').value = student.result.dbmsMarks || 0;
+                document.getElementById('psMarks').value = student.result.psMarks || 0;
+                document.getElementById('uhvMarks').value = student.result.uhvMarks || 0;
+                document.getElementById('oopsMarks').value = student.result.oopsMarks || 0;
+            }
+
+        } catch (error) {
+            console.error('Error fetching student:', error);
+            showMessage('Could not load student data. ' + error.message, 'error-message');
+        }
+    }
+
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        const studentId = document.getElementById('studentId').value;
+
+        // 1. Gather all data into Student and Result objects
+        const studentData = {
+            id: studentId ? studentId : null,
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            rollNumber: document.getElementById('rollNumber').value,
+            registerNumber: document.getElementById('registerNumber').value,
+            department: document.getElementById('department').value,
+            degree: document.getElementById('degree').value,
+            semester: document.getElementById('semester').value,
+            admissionYear: document.getElementById('admissionYear').value,
+            admissionNo: document.getElementById('admissionNo').value,
+            studentStatus: document.getElementById('studentStatus').value,
+            dob: document.getElementById('dob').value,
+            gender: document.getElementById('gender').value,
+            phone: document.getElementById('phone').value,
+            address: document.getElementById('address').value,
+            guardianContact: document.getElementById('guardianContact').value,
+            hostelStatus: document.getElementById('hostelStatus').value,
+            feeDetails: document.getElementById('feeDetails').value,
+
+            // Nest the Result object
+            result: {
+                attendanceRecord: document.getElementById('attendanceRecord').value,
+                dlmMarks: parseInt(document.getElementById('dlmMarks').value) || 0,
+                caoMarks: parseInt(document.getElementById('caoMarks').value) || 0,
+                evsMarks: parseInt(document.getElementById('evsMarks').value) || 0,
+                dbmsMarks: parseInt(document.getElementById('dbmsMarks').value) || 0,
+                psMarks: parseInt(document.getElementById('psMarks').value) || 0,
+                uhvMarks: parseInt(document.getElementById('uhvMarks').value) || 0,
+                oopsMarks: parseInt(document.getElementById('oopsMarks').value) || 0
+            }
+        };
+
+        // In edit mode, if password field is empty, remove it so it's not updated
+        if (studentId && (studentData.password === null || studentData.password === "")) {
+            delete studentData.password;
+        }
+
+        // 2. Send data to the server
+        try {
+            const response = await fetch(`${API_URL}/teacher/student/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(studentData)
+            });
+
+            if (response.ok) {
+                showMessage('Student record saved successfully!', 'success-message');
+                setTimeout(() => {
+                    window.location.href = '/teacher_dashboard.html';
+                }, 1500);
+            } else {
+                const errorText = await response.text();
+                throw new Error(errorText || 'Failed to save student.');
+            }
+        } catch (error) {
+            console.error('Error saving student:', error);
+            showMessage('Error: ' + error.message, 'error-message');
+        }
+    }
+
+    function showMessage(message, type) {
+        const msgEl = document.getElementById('form-message');
+        msgEl.textContent = message;
+        msgEl.className = `message ${type}`; // Use 'message' base class
+        msgEl.style.display = 'block';
+    }
+</script>
+</body>
+</html>

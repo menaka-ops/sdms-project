@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-container slide-up">
+    <header class="dashboard-header">
+        <h1 id="student-name-header">Student Dashboard</h1>
+        <p id="student-email">Loading...</p>
+        <a href="/logout" class="glow-btn">Logout</a>
+    </header>
+
+    <div id="loading-message" class="message" style="display:block;">Loading student data...</div>
+    <div id="error-message" class="message error-message" style="display:none;"></div>
+
+    <div id="student-content" style="display:none;" class="dashboard-content-single">
+        <div class="content-card">
+            <div class="form-section">
+                <h3>My Profile</h3>
+                <div class="profile-grid">
+                    <div><strong>Name:</strong> <span id="s-name"></span></div>
+                    <div><strong>Email:</strong> <span id="s-email"></span></div>
+                    <div><strong>Roll No:</strong> <span id="s-rollNumber"></span></div>
+                    <div><strong>Register No:</strong> <span id="s-registerNumber"></span></div>
+                    <div><strong>Department:</strong> <span id="s-department"></span></div>
+                    <div><strong>Degree:</strong> <span id="s-degree"></span></div>
+                    <div><strong>Semester:</strong> <span id="s-semester"></span></div>
+                    <div><strong>Status:</strong> <span id="s-studentStatus"></span></div>
+                    <div><strong>Phone:</strong> <span id="s-phone"></span></div>
+                    <div><strong>Fee Status:</strong> <span id="s-feeDetails"></span></div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>My Semester Results</h3>
+                <div id="results-content">
+                    <p><strong>Attendance:</strong> <span id="r-attendance"></span></p>
+                    <table id="resultsTable" class="results-table">
+                        <thead>
+                        <tr><th>Subject</th><th>Marks</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><td>DLM</td><td id="r-dlm"></td></tr>
+                        <tr><td>CAO</td><td id="r-cao"></td></tr>
+                        <tr><td>EVS</td><td id="r-evs"></td></tr>
+                        <tr><td>DBMS</td><td id="r-dbms"></td></tr>
+                        <tr><td>P&S</td><td id="r-ps"></td></tr>
+                        <tr><td>UHV</td><td id="r-uhv"></td></tr>
+                        <tr><td>OOPS</td><td id="r-oops"></td></tr>
+                        </tbody>
+                        <tfoot>
+                        <tr class="total-row">
+                            <td><strong>Total Marks</strong></td>
+                            <td id="r-total"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Grade</strong></td>
+                            <td id="r-grade"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>CGPA</strong></td>
+                            <td id="r-cgpa"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Use the port 9727 from your application.properties
+    const API_URL = 'http://localhost:9727/api';
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadStudentData();
+    });
+
+    async function loadStudentData() {
+        const loadingMsg = document.getElementById('loading-message');
+        const errorMsg = document.getElementById('error-message');
+        const contentEl = document.getElementById('student-content');
+
+        try {
+            const response = await fetch(`${API_URL}/student/my-details`);
+
+            if (response.status === 401) {
+                window.location.href = '/index.html?error=session_expired';
+                return;
+            }
+            if (!response.ok) {
+                throw new Error('Could not fetch student data.');
+            }
+
+            const student = await response.json();
+
+            // ... (no change to populating profile) ...
+            document.getElementById('student-name-header').textContent = `Welcome, ${student.name}`;
+            document.getElementById('student-email').textContent = `Logged in as: ${student.email}`;
+            document.getElementById('s-name').textContent = student.name;
+            document.getElementById('s-email').textContent = student.email;
+            document.getElementById('s-rollNumber').textContent = student.rollNumber || 'N/A';
+            document.getElementById('s-registerNumber').textContent = student.registerNumber || 'N/A';
+            document.getElementById('s-department').textContent = student.department || 'N/A';
+            document.getElementById('s-degree').textContent = student.degree || 'N/A';
+            document.getElementById('s-semester').textContent = student.semester || 'N/A';
+            document.getElementById('s-studentStatus').textContent = student.studentStatus || 'N/A';
+            document.getElementById('s-phone').textContent = student.phone || 'N/A';
+            document.getElementById('s-feeDetails').textContent = student.feeDetails || 'N/A';
+
+            // Populate Results
+            if (student.result) {
+                const result = student.result;
+                document.getElementById('r-attendance').textContent = result.attendanceRecord || 'N/A';
+                document.getElementById('r-dlm').textContent = result.dlmMarks;
+                document.getElementById('r-cao').textContent = result.caoMarks;
+                document.getElementById('r-evs').textContent = result.evsMarks;
+                document.getElementById('r-dbms').textContent = result.dbmsMarks;
+                document.getElementById('r-ps').textContent = result.psMarks;
+                document.getElementById('r-uhv').textContent = result.uhvMarks;
+                document.getElementById('r-oops').textContent = result.oopsMarks;
+                document.getElementById('r-total').textContent = result.totalMarks;
+                document.getElementById('r-grade').textContent = result.grade || 'Pending';
+
+                document.getElementById('r-cgpa').textContent = result.cgpa.toFixed(2) || 'N/A';
+
+                const topGrades = ['O', 'A+', 'A'];
+                if (topGrades.includes(result.grade)) {
+                    confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+                }
+            } else {
+                document.getElementById('results-content').innerHTML = "<p>Your results have not been posted yet.</p>";
+            }
+
+            // ✅ --- THIS IS THE FIX ---
+            loadingMsg.style.display = 'none'; // Removed the extra period
+            contentEl.style.display = 'block';
+
+        } catch (e) {
+            console.error(e);
+            loadingMsg.style.display = 'none';
+            errorMsg.textContent = 'Error: ' + e.message;
+            errorMsg.style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>

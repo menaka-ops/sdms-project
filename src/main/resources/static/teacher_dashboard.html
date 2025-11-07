@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-container slide-up">
+    <header class="dashboard-header">
+        <h1>Teacher Dashboard</h1>
+        <p id="teacher-email">Loading...</p>
+        <a href="/logout" class="glow-btn teacher">Logout</a>
+    </header>
+
+    <div class="dashboard-content-single">
+        <!-- Section to View All Students -->
+        <div class="content-card">
+            <div class="card-header">
+                <h2>Manage Students</h2>
+                <button class="glow-btn" onclick="openAddForm()">+ Add New Student</button>
+            </div>
+            <table id="studentsTable">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Register No.</th>
+                    <th>Semester</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                <!-- Student data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const teacherEmailEl = document.getElementById('teacher-email');
+    const studentsTableBody = document.getElementById('studentsTableBody');
+
+    // Use the port 9727 from your application.properties
+    const API_URL = 'http://localhost:9727/api';
+
+    // 1. Get the logged-in teacher's email
+    async function getTeacherEmail() {
+        try {
+            const response = await fetch(`${API_URL}/auth/me`);
+            if (!response.ok) throw new Error('Not logged in');
+            const user = await response.json();
+            teacherEmailEl.textContent = `Logged in as: ${user.email}`;
+        } catch (e) {
+            // If fetching user fails, redirect to login
+            window.location.href = '/index.html?error=session_expired';
+        }
+    }
+
+    // 2. Load all students into the table
+    async function loadAllStudents() {
+        try {
+            const response = await fetch(`${API_URL}/teacher/students`);
+            const students = await response.json();
+
+            studentsTableBody.innerHTML = ''; // Clear table
+            students.forEach(student => {
+                const row = `
+                    <tr>
+                        <td>${student.name}</td>
+                        <td>${student.email}</td>
+                        <td>${student.registerNumber || 'N/A'}</td>
+                        <td>${student.semester || 'N/A'}</td>
+                        <td>${student.studentStatus || 'Active'}</td>
+                        <td class="actions">
+                            <button class="btn-action edit" onclick="openEditForm(${student.id})">Edit</button>
+                            <button class="btn-action delete" onclick="deleteStudent('${student.email}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                studentsTableBody.innerHTML += row;
+            });
+        } catch (e) {
+            studentsTableBody.innerHTML = '<tr><td colspan="6">Error loading students.</td></tr>';
+        }
+    }
+
+    // 3. Functions to navigate to Add/Edit pages
+    function openAddForm() {
+        window.location.href = '/add_edit_student.html';
+    }
+
+    function openEditForm(studentId) {
+        window.location.href = `/add_edit_student.html?id=${studentId}`;
+    }
+
+    // 4. Function to delete a student
+    async function deleteStudent(email) {
+        if (!confirm(`Are you sure you want to delete the student with email: ${email}?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/teacher/student/${email}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Student deleted successfully!');
+                loadAllStudents(); // Refresh the list
+            } else {
+                const message = await response.text();
+                alert(`Error: ${message}`);
+            }
+        } catch (e) {
+            alert('Error connecting to the server.');
+        }
+    }
+
+    // Initial page load
+    getTeacherEmail();
+    loadAllStudents();
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDMS Login Portal</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="animated-bg">
+<div class="form-wrapper slide-up">
+    <div class="logo">
+        <!-- Using a generic logo, you can change this src -->
+        <img src="https://upload.wikimedia.org/wikipedia/en/c/cd/Sona_College_of_Technology_logo.png" alt="SDM Logo" style="width: 80px; filter: none; animation: none;">
+        <h1>SDMS Portal</h1>
+    </div>
+
+    <!-- This form POSTs to /login, handled by Spring Security -->
+    <form id="loginForm" action="/login" method="POST" class="glass-form">
+        <input type-="email" id="username" name="username" placeholder="Enter your email" required>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <button type="submit" class="glow-btn full">Login</button>
+
+        <p class="alt-link">New Student?
+            <a href="/register.html">Register Here</a>
+        </p>
+
+        <div id="errorMsg" class="error-message"></div>
+    </form>
+</div>
+
+<script>
+    // Show error message if login failed
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const logout = urlParams.get('logout');
+        const errorMsg = document.getElementById('errorMsg');
+
+        if (error) {
+            errorMsg.textContent = "⚠️ Invalid email or password!";
+        }
+        if (logout) {
+            errorMsg.style.color = "#00ff88"; // Success color
+            errorMsg.textContent = "✅ You have been logged out.";
+        }
+    });
+</script>
+</body>
+</html>

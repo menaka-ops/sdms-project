@@ -1,0 +1,420 @@
+/* --- Global Settings & Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Login/Register Page Styling (Dark) --- */
+.animated-bg {
+    height: 100vh;
+    /* Dark blue gradient background */
+    background: linear-gradient(120deg, #000428, #004e92, #0f0c29);
+    background-size: 400% 400%;
+    animation: gradientFlow 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e0e0e0; /* Light text */
+    overflow: auto;
+    padding: 20px;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animations */
+.fade-in { animation: fadeIn 0.7s ease; }
+.slide-up { animation: slideUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+@keyframes fadeIn { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
+@keyframes slideUp { from {opacity: 0; transform: translateY(40px);} to {opacity: 1; transform: translateY(0);} }
+
+/* Logo styles */
+.logo {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.logo img {
+    width: 70px;
+    /* Optional: make logo pop on dark bg */
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    padding: 5px;
+}
+.logo h1 {
+    font-size: 2rem;
+    background: linear-gradient(90deg, #00d9ff, #4da6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(77,166,255,0.3);
+}
+
+/* Login/Register Form Wrapper */
+.form-wrapper {
+    width: 100%;
+    max-width: 380px;
+}
+
+/* Glass effect form card (Works well on dark) */
+.glass-form {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08); /* Slightly less opacity */
+    padding: 35px;
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 180, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-form input,
+.glass-form select,
+.glass-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.2); /* Darker input bg */
+    color: #fff; /* White text */
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.3s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.glass-form option {
+    background-color: #004e92;
+    color: white;
+}
+
+.glass-form input::placeholder,
+.glass-form textarea::placeholder {
+    color: #b0c4de; /* Light blue placeholder */
+}
+
+.glass-form input:focus,
+.glass-form select:focus,
+.glass-form textarea:focus {
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+    border-color: #00d9ff;
+}
+
+/* Button styles (already look good) */
+.glow-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(90deg, #00d9ff, #007bff);
+    box-shadow: 0 0 15px rgba(0, 180, 255, 0.6);
+    transition: 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+.glow-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(0, 200, 255, 0.8);
+}
+.glow-btn.teacher {
+    background: linear-gradient(90deg, #ff8c00, #ff5e5e);
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.6);
+}
+.glow-btn.teacher:hover {
+    box-shadow: 0 0 25px rgba(255, 120, 0, 0.8);
+}
+.glow-btn.full {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* Helper text */
+.alt-link {
+    margin-top: 15px;
+    text-align: center;
+    color: #ccc; /* Lighter grey */
+    font-size: 0.9rem;
+}
+.alt-link a {
+    color: #00d9ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+.alt-link a:hover {
+    text-decoration: underline;
+}
+
+/* Error/Success Messages */
+.message {
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-weight: 500;
+    display: none; /* Hide base message */
+}
+.error-message {
+    color: #ff8a8a;
+    background-color: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    display: block;
+}
+.success-message {
+    color: #50ffb1;
+    background-color: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    display: block;
+}
+/* Ensure messages from URL params are shown */
+#errorMsg:not(:empty) {
+    display: block;
+}
+
+
+/* --- Dashboard Styles (Dark Theme) --- */
+
+.dashboard-body {
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.dashboard-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #1e1e1e; /* Dark card bg */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 25px;
+    border: 1px solid #333;
+}
+.dashboard-header h1 {
+    color: #00d9ff; /* Accent color */
+    font-size: 1.8rem;
+}
+.dashboard-header p {
+    color: #aaa; /* Lighter grey text */
+    font-size: 0.9rem;
+    flex-grow: 1;
+    margin: 0 15px;
+}
+
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 25px;
+}
+.dashboard-content-single {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+@media (max-width: 900px) {
+    .dashboard-content { grid-template-columns: 1fr; }
+    .dashboard-header { flex-direction: column; align-items: flex-start; }
+    .dashboard-header p { margin: 10px 0; }
+}
+
+.content-card {
+    background: #1e1e1e; /* Dark card bg */
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+    border: 1px solid #333;
+}
+.content-card h2, .content-card h3 {
+    color: #00d9ff; /* Accent color */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333; /* Dark border */
+    padding-bottom: 10px;
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.card-header h2 {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+/* Dashboard Table Styles (Dark) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+table thead {
+    background-color: #2a2a2a; /* Darker header */
+}
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #333; /* Dark border */
+    color: #e0e0e0; /* Light text */
+    white-space: nowrap;
+}
+table th {
+    color: #00d9ff; /* Accent header text */
+    font-weight: 600;
+}
+table tbody tr:hover {
+    background-color: #252525; /* Slight hover */
+}
+table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+/* Table Action Buttons (already look good) */
+.actions .btn-action {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    color: white;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+}
+.actions .btn-action:hover {
+    transform: scale(1.05);
+}
+.btn-action.edit {
+    background-color: #007bff;
+}
+.btn-action.delete {
+    background-color: #dc3545;
+}
+
+/* Dashboard Form (Dark) */
+.data-form .form-section {
+    margin-bottom: 20px;
+}
+.data-form .form-group {
+    margin-bottom: 15px;
+}
+.data-form .form-group label {
+    display: block;
+    font-weight: 600;
+    color: #ccc; /* Light grey label */
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+.data-form input[type="text"],
+.data-form input[type="email"],
+.data-form input[type="password"],
+.data-form input[type="tel"],
+.data-form input[type="date"],
+.data-form input[type="number"],
+.data-form select,
+.data-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.95rem;
+    background: #2a2a2a; /* Dark input bg */
+    color: #e0e0e0; /* Light text */
+    border: 1px solid #444; /* Dark border */
+    border-radius: 6px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.data-form option {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+/* Fix for date picker icon on Chrome */
+.data-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.data-form input:focus,
+.data-form select:focus,
+.data-form textarea:focus {
+    background: #333;
+    border-color: #00d9ff; /* Accent focus */
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+}
+.data-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.form-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; }
+
+@media (max-width: 768px) {
+    .form-grid-2, .form-grid-3, .form-grid-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.action-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+.action-buttons .glow-btn[style*="background-color: #6c757d"] {
+    background: #6c757d !important; /* Override inline style for cancel */
+    box-shadow: 0 0 15px rgba(108, 117, 125, 0.6);
+}
+.action-buttons .glow-btn[style*="background-color: #6c757d"]:hover {
+    box-shadow: 0 0 25px rgba(108, 117, 125, 0.8);
+}
+
+/* Student Profile Grid (Dark) */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    color: #e0e0e0;
+}
+.profile-grid div {
+    background: #2a2a2a; /* Darker bg */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+.profile-grid div strong {
+    color: #00d9ff; /* Accent */
+}
+
+/* Student Results Table (Dark) */
+.results-table {
+    margin-top: 0;
+}
+.results-table tfoot tr {
+    background-color: #2a2a2a;
+    border-top: 2px solid #00d9ff;
+}
+.results-table tfoot td {
+    font-weight: 700;
+    color: #00d9ff;
+    font-size: 1.1rem;
+}
