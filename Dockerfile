@@ -1,5 +1,5 @@
-# Use an official Maven image to build the app
-FROM maven:3.8.5-openjdk-17 AS build
+# Use an official Eclipse Temurin build image (Java 17)
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -12,8 +12,9 @@ RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Use a slim Java 17 image for the final, smaller application
-FROM openjdk:17-slim
+# ✅ --- THIS IS THE FIX ---
+# Use the official Eclipse Temurin JRE slim image
+FROM eclipse-temurin:17-jre-slim
 
 # Set the working directory
 WORKDIR /app
