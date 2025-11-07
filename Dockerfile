@@ -13,8 +13,8 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # ✅ --- THIS IS THE FIX ---
-# Use the official Eclipse Temurin JRE slim image
-FROM eclipse-temurin:17-jre-slim
+# Use the full, official Eclipse Temurin JRE slim image name
+FROM eclipse-temurin:17-jre-slim-jammy
 
 # Set the working directory
 WORKDIR /app
