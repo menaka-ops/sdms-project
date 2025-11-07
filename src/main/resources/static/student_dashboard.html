@@ -20,6 +20,7 @@
     <div id="error-message" class="message error-message" style="display:none;"></div>
 
     <div id="student-content" style="display:none;" class="dashboard-content-single">
+
         <div class="content-card">
             <div class="form-section">
                 <h3>My Profile</h3>
@@ -43,7 +44,10 @@
                     <p><strong>Attendance:</strong> <span id="r-attendance"></span></p>
                     <table id="resultsTable" class="results-table">
                         <thead>
-                        <tr><th>Subject</th><th>Marks</th></tr>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <tr><td>DLM</td><td id="r-dlm"></td></tr>
@@ -72,12 +76,13 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
 <script>
-    // Use the port 9727 from your application.properties
-    const API_URL = 'http://localhost:9727/api';
+    // ✅ --- THIS IS THE CHANGE ---
+    const API_URL = 'https://sdms-project-2.onrender.com/api';
 
     document.addEventListener("DOMContentLoaded", () => {
         loadStudentData();
@@ -89,6 +94,7 @@
         const contentEl = document.getElementById('student-content');
 
         try {
+            // Get student details (includes results)
             const response = await fetch(`${API_URL}/student/my-details`);
 
             if (response.status === 401) {
@@ -101,7 +107,7 @@
 
             const student = await response.json();
 
-            // ... (no change to populating profile) ...
+            // Populate Profile
             document.getElementById('student-name-header').textContent = `Welcome, ${student.name}`;
             document.getElementById('student-email').textContent = `Logged in as: ${student.email}`;
             document.getElementById('s-name').textContent = student.name;
@@ -116,8 +122,8 @@
             document.getElementById('s-feeDetails').textContent = student.feeDetails || 'N/A';
 
             // Populate Results
-            if (student.result) {
-                const result = student.result;
+            if (student.result) { // Changed to singular
+                const result = student.result; // Changed to singular
                 document.getElementById('r-attendance').textContent = result.attendanceRecord || 'N/A';
                 document.getElementById('r-dlm').textContent = result.dlmMarks;
                 document.getElementById('r-cao').textContent = result.caoMarks;
@@ -131,6 +137,7 @@
 
                 document.getElementById('r-cgpa').textContent = result.cgpa.toFixed(2) || 'N/A';
 
+                // Check for top grades
                 const topGrades = ['O', 'A+', 'A'];
                 if (topGrades.includes(result.grade)) {
                     confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
@@ -139,8 +146,8 @@
                 document.getElementById('results-content').innerHTML = "<p>Your results have not been posted yet.</p>";
             }
 
-            // ✅ --- THIS IS THE FIX ---
-            loadingMsg.style.display = 'none'; // Removed the extra period
+            // Show content
+            loadingMsg.style.display = 'none';
             contentEl.style.display = 'block';
 
         } catch (e) {

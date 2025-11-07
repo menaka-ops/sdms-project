@@ -16,7 +16,6 @@
     </header>
 
     <div class="dashboard-content-single">
-        <!-- Section to View All Students -->
         <div class="content-card">
             <div class="card-header">
                 <h2>Manage Students</h2>
@@ -34,7 +33,6 @@
                 </tr>
                 </thead>
                 <tbody id="studentsTableBody">
-                <!-- Student data will be loaded here -->
                 </tbody>
             </table>
         </div>
@@ -45,8 +43,8 @@
     const teacherEmailEl = document.getElementById('teacher-email');
     const studentsTableBody = document.getElementById('studentsTableBody');
 
-    // Use the port 9727 from your application.properties
-    const API_URL = 'http://localhost:9727/api';
+    // ✅ --- THIS IS THE CHANGE ---
+    const API_URL = 'https://sdms-project-2.onrender.com/api';
 
     // 1. Get the logged-in teacher's email
     async function getTeacherEmail() {
