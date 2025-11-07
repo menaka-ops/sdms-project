@@ -112,6 +112,9 @@ public class ApiController {
         return ResponseEntity.ok(savedStudent);
     }
 
+    /**
+     * This is the correct cascade logic
+     */
     @Transactional
     public Student saveStudentWithTransaction(Student studentData) {
 
@@ -200,10 +203,6 @@ public class ApiController {
         return ResponseEntity.ok("Student deleted successfully");
     }
 
-    /**
-     * [STUDENT] Get results for the CURRENTLY LOGGED-IN student.
-     * ✅ --- THIS IS THE FIX ---
-     */
     @GetMapping("/student/my-details")
     public ResponseEntity<?> getMyDetails(Authentication authentication) {
         String email = authentication.getName();
