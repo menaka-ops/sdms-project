@@ -1,5 +1,5 @@
-# Use an official Eclipse Temurin build image (Java 17)
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+# Use an official Amazon Corretto build image (Java 17)
+FROM maven:3-amazoncorretto-17 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -13,8 +13,8 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # ✅ --- THIS IS THE FIX ---
-# Use the full, official Eclipse Temurin JRE slim image name
-FROM eclipse-temurin:17-jre-slim-jammy
+# Use the official Amazon Corretto JRE (Alpine is very small)
+FROM amazoncorretto:17-alpine-jdk
 
 # Set the working directory
 WORKDIR /app
