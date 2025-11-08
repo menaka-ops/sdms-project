@@ -63,9 +63,17 @@
     async function loadAllStudents() {
         try {
             const response = await fetch(`${API_URL}/teacher/students`);
+            if (!response.ok) {
+                throw new Error('Could not load student list.');
+            }
             const students = await response.json();
 
             studentsTableBody.innerHTML = ''; // Clear table
+            if (students.length === 0) {
+                studentsTableBody.innerHTML = '<tr><td colspan="6">No students found. Click "Add New Student" to begin.</td></tr>';
+                return;
+            }
+
             students.forEach(student => {
                 const row = `
                     <tr>
@@ -83,6 +91,7 @@
                 studentsTableBody.innerHTML += row;
             });
         } catch (e) {
+            console.error(e);
             studentsTableBody.innerHTML = '<tr><td colspan="6">Error loading students.</td></tr>';
         }
     }

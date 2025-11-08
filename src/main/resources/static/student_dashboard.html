@@ -122,8 +122,8 @@
             document.getElementById('s-feeDetails').textContent = student.feeDetails || 'N/A';
 
             // Populate Results
-            if (student.result) { // Changed to singular
-                const result = student.result; // Changed to singular
+            if (student.result) {
+                const result = student.result;
                 document.getElementById('r-attendance').textContent = result.attendanceRecord || 'N/A';
                 document.getElementById('r-dlm').textContent = result.dlmMarks;
                 document.getElementById('r-cao').textContent = result.caoMarks;
