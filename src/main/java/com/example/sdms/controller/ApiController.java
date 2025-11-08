@@ -204,11 +204,11 @@ public class ApiController {
         return ResponseEntity.ok("Student deleted successfully");
     }
 
-    // ✅ FIX: Use findByEmailWithResult to prevent LazyInitializationException on Student Dashboard
     @GetMapping("/student/my-details")
     public ResponseEntity<?> getMyDetails(Authentication authentication) {
         String email = authentication.getName();
 
+        // Use the new method that fetches the student AND their result
         Optional<Student> studentOpt = studentRepository.findByEmailWithResult(email);
 
         if (studentOpt.isEmpty()) {
