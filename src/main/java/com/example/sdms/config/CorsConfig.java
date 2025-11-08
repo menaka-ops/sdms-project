@@ -13,8 +13,13 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+                // ✅ ADD THE LIVE RENDER DOMAIN
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:9727", "http://127.0.0.1:9727")
+                        .allowedOrigins(
+                                "http://localhost:9727",
+                                "http://127.0.0.1:9727",
+                                "https://sdms-project-2-b8fe.onrender.com" // <-- ADD THIS LINE
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
             }
