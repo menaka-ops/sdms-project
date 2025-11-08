@@ -43,8 +43,9 @@
     const teacherEmailEl = document.getElementById('teacher-email');
     const studentsTableBody = document.getElementById('studentsTableBody');
 
-    // ✅ --- THIS IS THE CHANGE ---
-    const API_URL = 'https://sdms-project-2.onrender.com/api';
+    // ✅ --- THIS IS THE FINAL FIX ---
+    // This now points to your new, live server URL
+    const API_URL = 'https://sdms-project-2-b8fe.onrender.com/api';
 
     // 1. Get the logged-in teacher's email
     async function getTeacherEmail() {
