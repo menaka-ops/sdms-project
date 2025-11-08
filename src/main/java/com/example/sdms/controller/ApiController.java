@@ -64,9 +64,10 @@ public class ApiController {
         student.setPassword(passwordEncoder.encode(student.getPassword()));
 
         Results newResult = new Results();
-        newResult.setStudent(student);
-        student.setResult(newResult);
+        newResult.setStudent(student); // Link Result to Student
+        student.setResult(newResult);  // Link Student to Result
 
+        // Save the student. Cascade saves the result.
         Student savedStudent = studentRepository.save(student);
 
         try {
@@ -77,12 +78,14 @@ public class ApiController {
         return new ResponseEntity<>("Student registered successfully!", HttpStatus.CREATED);
     }
 
+    // ✅ FIX: Use findAllWithResults to prevent LazyInitializationException
     @GetMapping("/teacher/students")
     public ResponseEntity<List<Student>> findAllStudents() {
         List<Student> students = studentRepository.findAllWithResults();
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
+    // ✅ FIX: Use findByIdWithResult to prevent LazyInitializationException on Edit page
     @GetMapping("/teacher/student/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
         return studentRepository.findByIdWithResult(id)
@@ -112,14 +115,12 @@ public class ApiController {
         return ResponseEntity.ok(savedStudent);
     }
 
-    /**
-     * This is the correct cascade logic
-     */
     @Transactional
     public Student saveStudentWithTransaction(Student studentData) {
 
         if (studentData.getId() != null) {
             // --- UPDATE LOGIC ---
+            // Fetch by ID only to get the base student record
             Student existingStudent = studentRepository.findById(studentData.getId())
                     .orElseThrow(() -> new RuntimeException("Student not found"));
 
@@ -188,7 +189,7 @@ public class ApiController {
                 studentData.setResult(newResult);
             }
 
-            // 3. Save the student. CascadeType.ALL will save the 'result' object too.
+            // 3. Save the student. Cascade will save the 'result' object too.
             return studentRepository.save(studentData);
         }
     }
@@ -203,11 +204,11 @@ public class ApiController {
         return ResponseEntity.ok("Student deleted successfully");
     }
 
+    // ✅ FIX: Use findByEmailWithResult to prevent LazyInitializationException on Student Dashboard
     @GetMapping("/student/my-details")
     public ResponseEntity<?> getMyDetails(Authentication authentication) {
         String email = authentication.getName();
 
-        // Use the new method that fetches the student AND their result
         Optional<Student> studentOpt = studentRepository.findByEmailWithResult(email);
 
         if (studentOpt.isEmpty()) {
