@@ -13,12 +13,13 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                // ✅ ADD YOUR NEW RENDER URL HERE
+                // ✅ --- FINAL VERSION ---
+                // This allows your Render frontend to connect.
                 registry.addMapping("/**")
                         .allowedOrigins(
                                 "http://localhost:9727",
                                 "http://127.0.0.1:9727",
-                                "https://sdms-project-ready.onrender.com" // <-- THIS IS THE FIX
+                                "https://sdms-project-ready.onrender.com" // Your Render URL
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);

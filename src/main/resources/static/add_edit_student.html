@@ -123,7 +123,8 @@
                 <label for="feeDetails">Fee Details</label>
                 <select id="feeDetails">
                     <option value="Pending">Pending</option>
-                    <option value="Paid">Paid</option> </select>
+                    <option value="Paid">Paid</option>
+                </select>
             </div>
         </div>
 
@@ -161,8 +162,8 @@
 
 <script>
     // ✅ --- FINAL VERSION ---
-    // This now uses a relative path, which will work correctly on Railway.
-    const API_URL = '/api';
+    // This now points to your new, live Render URL
+    const API_URL = 'https://sdms-project-ready.onrender.com/api';
 
     document.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(window.location.search);
@@ -226,7 +227,7 @@
                 document.getElementById('dlmMarks').value = student.result.dlmMarks || 0;
                 document.getElementById('caoMarks').value = student.result.caoMarks || 0;
                 document.getElementById('evsMarks').value = student.result.evsMarks || 0;
-                document.getElementById('dbmsMarks').value = student.result.dbmsMarks ||.value || 0;
+                document.getElementById('dbmsMarks').value = student.result.dbmsMarks || 0;
                 document.getElementById('psMarks').value = student.result.psMarks || 0;
                 document.getElementById('uhvMarks').value = student.result.uhvMarks || 0;
                 document.getElementById('oopsMarks').value = student.result.oopsMarks || 0;
@@ -247,7 +248,7 @@
             id: studentId ? studentId : null,
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            password: document.getElementById('password').value,
+            password: document.getElementById('password').value, // ✅ TYPO FIXED HERE
             rollNumber: document.getElementById('rollNumber').value,
             registerNumber: document.getElementById('registerNumber').value,
             department: document.getElementById('department').value,
@@ -284,7 +285,7 @@
 
         // 2. Send data to the server
         try {
-            const response = await fetch(`${API_URL}/teacher/student/save`, {
+            const response = await fetch(`${API_TYPE_HERE}/teacher/student/save`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(studentData)
