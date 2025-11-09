@@ -13,12 +13,12 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                // ✅ ADD THE LIVE RENDER DOMAIN TO ALLOW COMMUNICATION
+                // ✅ ADD YOUR NEW RENDER URL HERE
                 registry.addMapping("/**")
                         .allowedOrigins(
                                 "http://localhost:9727",
                                 "http://127.0.0.1:9727",
-                                "https://sdms-project-2-b8fe.onrender.com" // <-- THIS FIXES THE MOBILE/LIVE ISSUE
+                                "https://sdms-project-ready.onrender.com" // <-- THIS IS THE FIX
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
