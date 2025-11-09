@@ -43,9 +43,9 @@
     const teacherEmailEl = document.getElementById('teacher-email');
     const studentsTableBody = document.getElementById('studentsTableBody');
 
-    // ✅ --- THIS IS THE FINAL FIX ---
-    // This now points to your new, live server URL
-    const API_URL = 'https://sdms-project-ready.onrender.com/api';
+    // ✅ --- FINAL VERSION ---
+    // This now uses a relative path, which will work correctly on Railway.
+    const API_URL = '/api';
 
     // 1. Get the logged-in teacher's email
     async function getTeacherEmail() {
